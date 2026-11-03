@@ -13,8 +13,12 @@ class EnsureUserHasRole
      *
      * @param  Closure(Request): (Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
-    {
-        return $next($request);
+  public function handle(Request $request, Closure $next, string $role): Response
+{
+    if ($request->user()->role !== "admin") {
+        abort(403);
     }
+
+    return $next($request);
+}
 }
